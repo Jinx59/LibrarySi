@@ -46,7 +46,8 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                     node_fetch_1.default(API_URL + pEmail, options).then(function (data) {
                         data.json().then(function (jsonData) {
                             if (data.ok) {
-                                delete jsonData.created;
+                                delete jsonData.password;
+                                delete jsonData.passwordSalt;
                                 resolve(jsonData);
                             }
                             else if (data.status == 404) {

@@ -11,7 +11,8 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
       fetch(API_URL + pEmail, options).then(data => {
         data.json().then((jsonData: IUser) => {
           if (data.ok) {
-            delete jsonData.created
+            delete jsonData.password
+            delete jsonData.passwordSalt
             resolve(jsonData)
           } else if (data.status == 404) {
             resolve(undefined)
