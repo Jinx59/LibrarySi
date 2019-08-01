@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = require("node-fetch");
+// method call API Auth to get user by mail
 function getUserByMail(token, pEmail, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
@@ -45,6 +46,7 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                     node_fetch_1.default(API_URL + pEmail, options).then(function (data) {
                         data.json().then(function (jsonData) {
                             if (data.ok) {
+                                delete jsonData.created;
                                 resolve(jsonData);
                             }
                             else if (data.status == 404) {
