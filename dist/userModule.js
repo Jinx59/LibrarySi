@@ -39,19 +39,23 @@ var axios_1 = require("axios");
 // method call API Auth to get user by mail
 function getUserByMail(token, pEmail, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
         return __generator(this, function (_a) {
-            options = { headers: { Authorization: token, "x-api-key": API_KEY } };
+            // set headers and method
+            // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY }, url: API_URL + pEmail };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    axios_1.default.get(API_URL + pEmail, options).then(function (data) {
-                        data.data.json().then(function (jsonData) {
-                            if (data.data.ok) {
+                    axios_1.default({
+                        method: "GET",
+                        headers: { Authorization: token, "x-api-key": API_KEY },
+                        url: API_URL + pEmail
+                    }).then(function (res) {
+                        res.data.then(function (jsonData) {
+                            if (res.status == 200) {
                                 // delete critical information
                                 delete jsonData.password;
                                 delete jsonData.passwordSalt;
                                 resolve(jsonData);
                             }
-                            else if (data.status == 404) {
+                            else if (res.status == 404) {
                                 resolve(undefined);
                             }
                             else {
