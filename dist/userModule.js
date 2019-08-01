@@ -46,6 +46,7 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                     node_fetch_1.default(API_URL + pEmail, options).then(function (data) {
                         data.json().then(function (jsonData) {
                             if (data.ok) {
+                                // delete critical information
                                 delete jsonData.password;
                                 delete jsonData.passwordSalt;
                                 resolve(jsonData);
@@ -63,3 +64,29 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
     });
 }
 exports.getUserByMail = getUserByMail;
+// method call API Auth to create a user
+function createUser(token, pUser, API_URL, API_KEY) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            // // set headers and method
+            // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
+            return [2 /*return*/, new Promise(function (resolve, reject) {
+                    node_fetch_1.default(API_URL, { method: "POST", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) })
+                        .then(function (data) {
+                        data.json().then(function (jsonData) {
+                            if (data.ok) {
+                                resolve(jsonData);
+                            }
+                            else if (data.status == 404) {
+                                resolve(undefined);
+                            }
+                            else {
+                                reject(new Error('error.dataNotProvided'));
+                            }
+                        }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                    }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                })];
+        });
+    });
+}
+exports.createUser = createUser;
