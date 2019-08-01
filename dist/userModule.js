@@ -35,18 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var node_fetch_1 = require("node-fetch");
 function getUserByMail(token, pEmail, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
+        var options;
         return __generator(this, function (_a) {
+            options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY } };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    fetch(API_URL + pEmail, {
-                        method: 'GET',
-                        headers: new Headers({
-                            'Content-Type': 'application/json',
-                            'x-api-key': API_KEY,
-                            'authorization': token
-                        })
-                    }).then(function (data) {
+                    node_fetch_1.default(API_URL + pEmail, options).then(function (data) {
                         data.json().then(function (jsonData) {
                             if (data.ok) {
                                 resolve(jsonData);
