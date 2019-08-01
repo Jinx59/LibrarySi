@@ -35,17 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var node_fetch_1 = require("node-fetch");
+var axios_1 = require("axios");
 // method call API Auth to get user by mail
 function getUserByMail(token, pEmail, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
         return __generator(this, function (_a) {
-            options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY } };
+            options = { headers: { Authorization: token, "x-api-key": API_KEY } };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    node_fetch_1.default(API_URL + pEmail, options).then(function (data) {
-                        data.json().then(function (jsonData) {
-                            if (data.ok) {
+                    axios_1.default.get(API_URL + pEmail, options).then(function (data) {
+                        data.data.json().then(function (jsonData) {
+                            if (data.data.ok) {
                                 // delete critical information
                                 delete jsonData.password;
                                 delete jsonData.passwordSalt;
@@ -71,7 +71,7 @@ function createUser(token, pUser, API_URL, API_KEY) {
             // // set headers and method
             // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    node_fetch_1.default(API_URL, { method: "POST", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) })
+                    fetch(API_URL, { method: "POST", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) })
                         .then(function (data) {
                         data.json().then(function (jsonData) {
                             if (data.ok) {

@@ -1,16 +1,16 @@
 import { IUser } from "./models/User"
-import fetch from "node-fetch";
+import axios from "axios";
 
 // method call API Auth to get user by mail
 export async function getUserByMail (token: string, pEmail: string, API_URL: string, API_KEY: string): Promise<IUser|undefined> {
 
   // set headers and method
-  const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY } };
+  const options = { headers: { Authorization: token, "x-api-key": API_KEY } };
   
     return new Promise((resolve, reject) => {
-      fetch(API_URL + pEmail, options).then(data => {
-        data.json().then((jsonData: IUser) => {
-          if (data.ok) {
+      axios.get(API_URL + pEmail, options).then(data => {
+        data.data.json().then((jsonData: IUser) => {
+          if (data.data.ok) {
             // delete critical information
             delete jsonData.password
             delete jsonData.passwordSalt
