@@ -39,14 +39,12 @@ var axios_1 = require("axios");
 // method call API Auth to get user by mail
 function getUserByMail(token, pEmail, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
+        var url;
         return __generator(this, function (_a) {
-            // set headers and method
-            // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY }, url: API_URL + pEmail };
+            url = API_URL + pEmail;
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    axios_1.default({
-                        method: "GET",
-                        headers: { Authorization: token, "x-api-key": API_KEY },
-                        url: API_URL + pEmail
+                    axios_1.default.get(url, {
+                        headers: { Authorization: token, "x-api-key": API_KEY }
                     }).then(function (res) {
                         res.data.then(function (jsonData) {
                             if (res.status == 200) {
@@ -59,10 +57,10 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                                 resolve(undefined);
                             }
                             else {
-                                reject(new Error('error.dataNotProvided'));
+                                reject(new Error('error.dataNotProvideed'));
                             }
                         }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
-                    }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                    }).catch(function (e) { return reject(new Error('error.dataNotProvideeed')); });
                 })];
         });
     });

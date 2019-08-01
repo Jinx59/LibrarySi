@@ -6,13 +6,12 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
 
   // set headers and method
   // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY }, url: API_URL + pEmail };
-  
+  const url = API_URL + pEmail
     return new Promise((resolve, reject) => {
-      axios({
-        method: "GET",
-        headers: { Authorization: token, "x-api-key": API_KEY },
-        url: API_URL + pEmail
-      }).then(res => {
+      axios.get(url, {
+        headers: { Authorization: token, "x-api-key": API_KEY }
+        } 
+      ).then(res => {
         res.data.then((jsonData: IUser) => {
           if (res.status == 200) {
             // delete critical information
@@ -22,10 +21,10 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
           } else if (res.status == 404) {
             resolve(undefined)
           } else {
-            reject(new Error('error.dataNotProvided'))
+            reject(new Error('error.dataNotProvideed'))
           }
         }).catch(e => reject(new Error('error.dataNotProvided')))
-      }).catch(e => reject(new Error('error.dataNotProvided')))
+      }).catch(e => reject(new Error('error.dataNotProvideeed')))
     })
   }
 
