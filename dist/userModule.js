@@ -48,7 +48,7 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                                 resolve(jsonData);
                             }
                             else if (data.status == 404) {
-                                resolve(jsonData);
+                                resolve(undefined);
                             }
                             else {
                                 reject(new Error('error.dataNotProvided'));
