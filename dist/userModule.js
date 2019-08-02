@@ -85,13 +85,15 @@ function createUser(token, pUser, API_URL, API_KEY) {
                             'x-api-key': API_KEY
                         },
                         data: pUser
-                    })
-                        .then(function (res) {
+                    }).then(function (res) {
                         var user = res.data;
                         resolve(user);
                     }).catch(function (error) {
                         if (error.response.status === 409) {
                             resolve(undefined);
+                        }
+                        if (error.response.status === 500) {
+                            reject(new Error('error.server'));
                         }
                         else {
                             reject(new Error('error.dataNotProvided'));

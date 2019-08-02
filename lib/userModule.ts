@@ -14,8 +14,7 @@ export async function getUserByMail(token: string, pEmail: string, API_URL: stri
         Authorization: token,
         'x-api-key': API_KEY
       }
-    }
-    ).then(res => {
+    }).then(res => {
       let user: IUser = res.data
       // delete critical information
       delete user.password
@@ -24,8 +23,7 @@ export async function getUserByMail(token: string, pEmail: string, API_URL: stri
     }).catch(error => {
       if (error.response.status === 404) {
         resolve(undefined)
-      }
-      if (error.response.status === 500) {
+      } if (error.response.status === 500) {
         reject(new Error('error.server'))
       } else {
         reject(new Error('error.dataNotProvided'))
@@ -47,16 +45,17 @@ export async function createUser(token: string | undefined, pUser: IUser, API_UR
         'x-api-key': API_KEY
       },
       data: pUser
+    }).then(res => {
+      let user: IUser = res.data
+      resolve(user)
+    }).catch(error => {
+      if (error.response.status === 409) {
+        resolve(undefined)
+      } if (error.response.status === 500) {
+        reject(new Error('error.server'))
+      } else {
+        reject(new Error('error.dataNotProvided'))
+      }
     })
-      .then(res => {
-        let user: IUser = res.data
-        resolve(user)
-      }).catch(error => {
-        if (error.response.status === 409) {
-          resolve(undefined)
-        } else {
-          reject(new Error('error.dataNotProvided'))
-        }
-      })
   })
 }
