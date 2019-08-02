@@ -60,6 +60,9 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                         if (error.response.status === 404) {
                             resolve(undefined);
                         }
+                        if (error.response.status === 500) {
+                            reject(new Error('error.server'));
+                        }
                         else {
                             reject(new Error('error.dataNotProvided'));
                         }
@@ -86,7 +89,14 @@ function createUser(token, pUser, API_URL, API_KEY) {
                         .then(function (res) {
                         var user = res.data;
                         resolve(user);
-                    }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                    }).catch(function (error) {
+                        if (error.response.status === 409) {
+                            resolve(undefined);
+                        }
+                        else {
+                            reject(new Error('error.dataNotProvided'));
+                        }
+                    });
                 })];
         });
     });

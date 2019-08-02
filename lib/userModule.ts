@@ -24,6 +24,9 @@ export async function getUserByMail(token: string, pEmail: string, API_URL: stri
     }).catch(error => {
       if (error.response.status === 404) {
         resolve(undefined)
+      }
+      if (error.response.status === 500) {
+        reject(new Error('error.server'))
       } else {
         reject(new Error('error.dataNotProvided'))
       }
@@ -48,6 +51,12 @@ export async function createUser(token: string | undefined, pUser: IUser, API_UR
       .then(res => {
         let user: IUser = res.data
         resolve(user)
-      }).catch(e => reject(new Error('error.dataNotProvided')))
+      }).catch(error => {
+        if (error.response.status === 409) {
+          resolve(undefined)
+        } else {
+          reject(new Error('error.dataNotProvided'))
+        }
+      })
   })
 }
