@@ -7,9 +7,14 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
   // set url
   const url = API_URL + pEmail
     return new Promise((resolve, reject) => {
-      axios.get(url, {
-        headers: { Authorization: token, "x-api-key": API_KEY }
-        } 
+      axios({
+        method: 'get',
+        url: url,
+        headers: {
+          Authorization: token,
+          'x-api-key': API_KEY
+        }
+      }
       ).then(res => {
             let user: IUser = res.data
             // delete critical information

@@ -43,8 +43,13 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
         return __generator(this, function (_a) {
             url = API_URL + pEmail;
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    axios_1.default.get(url, {
-                        headers: { Authorization: token, "x-api-key": API_KEY }
+                    axios_1.default({
+                        method: 'get',
+                        url: url,
+                        headers: {
+                            Authorization: token,
+                            'x-api-key': API_KEY
+                        }
                     }).then(function (res) {
                         var user = res.data;
                         // delete critical information
