@@ -47,11 +47,11 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                         headers: { Authorization: token, "x-api-key": API_KEY }
                     }).then(function (res) {
                         if (res.status == 200) {
-                            var jsonData = res.data;
+                            var user = res.data;
                             // delete critical information
-                            delete jsonData.password;
-                            delete jsonData.passwordSalt;
-                            resolve(jsonData);
+                            delete user.password;
+                            delete user.passwordSalt;
+                            resolve(user);
                         }
                         else if (res.status == 404) {
                             resolve(undefined);
@@ -72,19 +72,20 @@ function createUser(token, pUser, API_URL, API_KEY) {
             // // set headers and method
             // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    fetch(API_URL, { method: "POST", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) })
-                        .then(function (data) {
-                        data.json().then(function (jsonData) {
-                            if (data.ok) {
-                                resolve(jsonData);
-                            }
-                            else if (data.status == 404) {
-                                resolve(undefined);
-                            }
-                            else {
-                                reject(new Error('error.dataNotProvided'));
-                            }
-                        }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                    axios_1.default.get(API_URL, { headers: {
+                            Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json"
+                        }, data: pUser })
+                        .then(function (res) {
+                        if (res.status === 201) {
+                            var user = res.data;
+                            resolve(user);
+                        }
+                        else if (res.status == 404) {
+                            resolve(undefined);
+                        }
+                        else {
+                            reject(new Error('error.dataNotProvided'));
+                        }
                     }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
                 })];
         });
