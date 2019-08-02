@@ -2,7 +2,7 @@ import { IUser } from "./models/User"
 import axios from "axios";
 
 // method call API Auth to get user by mail
-export async function getUserByMail(token: string, pEmail: string, API_URL: string, API_KEY: string): Promise<IUser | undefined> {
+export async function getUserByMail(token: string, pEmail: string, API_URL: string, API_KEY: string): Promise<IUser|undefined> {
 
   // set url
   const url = API_URL + pEmail
@@ -34,7 +34,7 @@ export async function getUserByMail(token: string, pEmail: string, API_URL: stri
 
 
 // method call API Auth to create a user
-export async function createUser(token: string | undefined, pUser: IUser, API_URL: string, API_KEY: string): Promise<IUser | undefined> {
+export async function createUser(token: string|undefined, pUser: IUser, API_URL: string, API_KEY: string|undefined): Promise<IUser|undefined> {
 
   return new Promise((resolve, reject) => {
     axios({
