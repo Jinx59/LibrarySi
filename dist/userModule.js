@@ -53,7 +53,7 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                             delete jsonData.passwordSalt;
                             resolve(jsonData);
                         }
-                        else if (res.status == 404) {
+                        else if (res.status !== 200) {
                             resolve(undefined);
                         }
                         else {

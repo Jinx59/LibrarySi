@@ -18,7 +18,7 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
             delete jsonData.password
             delete jsonData.passwordSalt
             resolve(jsonData)
-          } else if (res.status == 404) {
+          } else if (res.status !== 200) {
             resolve(undefined)
           } else {
             reject(new Error('error.dataNotProvideed'))
