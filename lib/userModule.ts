@@ -2,7 +2,7 @@ import { IUser } from "./models/User"
 import axios from "axios";
 
 // method call API Auth to get user by mail
-export async function getUserByMail (token: string, pEmail: string, API_URL: string, API_KEY: string): Promise<IUser|undefined> {
+export async function getUserByMail (token: string, pEmail: string, API_URL: string, API_KEY: string): Promise<any> {
 
   // set headers and method
   // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY }, url: API_URL + pEmail };
@@ -13,12 +13,12 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
         } 
       ).then(res => {
           if (res.status == 200) {
-            let jsonData: IUser = res.data
-            // delete critical information
-            delete jsonData.password
-            delete jsonData.passwordSalt
-            resolve(jsonData)
-          } else if (res.status !== 200) {
+            // let jsonData: IUser = res.data
+            // // delete critical information
+            // delete jsonData.password
+            // delete jsonData.passwordSalt
+            resolve(res)
+          } else if (res.status == 404) {
             resolve(undefined)
           } else {
             reject(new Error('error.dataNotProvideed'))
