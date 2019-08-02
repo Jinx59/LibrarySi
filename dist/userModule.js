@@ -46,20 +46,19 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                     axios_1.default.get(url, {
                         headers: { Authorization: token, "x-api-key": API_KEY }
                     }).then(function (res) {
-                        res.data.then(function (jsonData) {
-                            if (res.status == 200) {
-                                // delete critical information
-                                delete jsonData.password;
-                                delete jsonData.passwordSalt;
-                                resolve(jsonData);
-                            }
-                            else if (res.status == 404) {
-                                resolve(undefined);
-                            }
-                            else {
-                                reject(new Error('error.dataNotProvideed'));
-                            }
-                        }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
+                        if (res.status == 200) {
+                            var jsonData = res.data;
+                            // delete critical information
+                            delete jsonData.password;
+                            delete jsonData.passwordSalt;
+                            resolve(jsonData);
+                        }
+                        else if (res.status == 404) {
+                            resolve(undefined);
+                        }
+                        else {
+                            reject(new Error('error.dataNotProvideed'));
+                        }
                     }).catch(function (e) { return reject(new Error('error.dataNotProvideeed')); });
                 })];
         });

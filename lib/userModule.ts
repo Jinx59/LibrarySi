@@ -12,8 +12,8 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
         headers: { Authorization: token, "x-api-key": API_KEY }
         } 
       ).then(res => {
-        res.data.then((jsonData: IUser) => {
           if (res.status == 200) {
+            let jsonData: IUser = res.data
             // delete critical information
             delete jsonData.password
             delete jsonData.passwordSalt
@@ -23,7 +23,6 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
           } else {
             reject(new Error('error.dataNotProvideed'))
           }
-        }).catch(e => reject(new Error('error.dataNotProvided')))
       }).catch(e => reject(new Error('error.dataNotProvideeed')))
     })
   }
