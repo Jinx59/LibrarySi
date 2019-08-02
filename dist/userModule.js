@@ -76,16 +76,8 @@ function createUser(token, pUser, API_URL, API_KEY) {
                             Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json"
                         }, data: pUser })
                         .then(function (res) {
-                        if (res.status === 201) {
-                            var user = res.data;
-                            resolve(user);
-                        }
-                        else if (res.status == 404) {
-                            resolve(undefined);
-                        }
-                        else {
-                            reject(new Error('error.dataNotProvided'));
-                        }
+                        var user = res.data;
+                        resolve(user);
                     }).catch(function (e) { return reject(new Error('error.dataNotProvided')); });
                 })];
         });

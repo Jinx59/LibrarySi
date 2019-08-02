@@ -37,14 +37,8 @@ export async function createUser (token: string|undefined, pUser: IUser, API_URL
       axios.get(API_URL, { headers: {
          Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, data: pUser})
       .then(res => {
-          if (res.status === 201) {
             let user: IUser = res.data
             resolve(user)
-          } else if (res.status == 404) {
-            resolve(undefined)
-          } else {
-            reject(new Error('error.dataNotProvided'))
-          }
       }).catch(e => reject(new Error('error.dataNotProvided')))
     })
   }
