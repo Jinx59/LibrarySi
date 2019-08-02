@@ -28,7 +28,7 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
 
 
 // method call API Auth to create a user
-export async function createUser (token: string, pUser: IUser, API_URL: string, API_KEY: string): Promise<IUser|undefined> {
+export async function createUser (token: string|undefined, pUser: IUser, API_URL: string, API_KEY: string): Promise<IUser|undefined> {
 
   // // set headers and method
   // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
