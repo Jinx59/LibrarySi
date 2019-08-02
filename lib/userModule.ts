@@ -11,17 +11,11 @@ export async function getUserByMail (token: string, pEmail: string, API_URL: str
         headers: { Authorization: token, "x-api-key": API_KEY }
         } 
       ).then(res => {
-          if (res.status == 200) {
             let user: IUser = res.data
             // delete critical information
             delete user.password
             delete user.passwordSalt
             resolve(user)
-          } else if (res.status == 404) {
-            resolve(undefined)
-          } else {
-            reject(new Error('error.dataNotProvideed'))
-          }
       }).catch(e => reject(new Error('error.dataNotProvideeed')))
     })
   }
@@ -34,8 +28,15 @@ export async function createUser (token: string|undefined, pUser: IUser, API_URL
   // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
   
     return new Promise((resolve, reject) => {
-      axios.post(API_URL, { headers: {
-         Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, data: pUser})
+      axios({
+        method: 'post',
+        url: API_URL,
+        headers: {
+          Authorization: token,
+          'x-api-key': API_KEY
+        },
+        data: pUser
+      })
       .then(res => {
             let user: IUser = res.data
             resolve(user)

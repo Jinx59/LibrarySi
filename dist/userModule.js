@@ -46,19 +46,11 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                     axios_1.default.get(url, {
                         headers: { Authorization: token, "x-api-key": API_KEY }
                     }).then(function (res) {
-                        if (res.status == 200) {
-                            var user = res.data;
-                            // delete critical information
-                            delete user.password;
-                            delete user.passwordSalt;
-                            resolve(user);
-                        }
-                        else if (res.status == 404) {
-                            resolve(undefined);
-                        }
-                        else {
-                            reject(new Error('error.dataNotProvideed'));
-                        }
+                        var user = res.data;
+                        // delete critical information
+                        delete user.password;
+                        delete user.passwordSalt;
+                        resolve(user);
                     }).catch(function (e) { return reject(new Error('error.dataNotProvideeed')); });
                 })];
         });
@@ -72,9 +64,15 @@ function createUser(token, pUser, API_URL, API_KEY) {
             // // set headers and method
             // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    axios_1.default.post(API_URL, { headers: {
-                            Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json"
-                        }, data: pUser })
+                    axios_1.default({
+                        method: 'post',
+                        url: API_URL,
+                        headers: {
+                            Authorization: token,
+                            'x-api-key': API_KEY
+                        },
+                        data: pUser
+                    })
                         .then(function (res) {
                         var user = res.data;
                         resolve(user);
