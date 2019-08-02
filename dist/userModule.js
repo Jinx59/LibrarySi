@@ -56,7 +56,14 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                         delete user.password;
                         delete user.passwordSalt;
                         resolve(user);
-                    }).catch(function (e) { return reject(new Error('error.dataNotProvideeed')); });
+                    }).catch(function (error) {
+                        if (error.response.status === 404) {
+                            resolve(undefined);
+                        }
+                        else {
+                            reject(new Error('error.dataNotProvided'));
+                        }
+                    });
                 })];
         });
     });
@@ -66,8 +73,6 @@ exports.getUserByMail = getUserByMail;
 function createUser(token, pUser, API_URL, API_KEY) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            // // set headers and method
-            // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     axios_1.default({
                         method: 'post',
