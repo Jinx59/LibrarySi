@@ -57,10 +57,10 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                         delete user.passwordSalt;
                         resolve(user);
                     }).catch(function (error) {
-                        if (error.response.status === 500) {
+                        if (error.response.status === 404) {
                             resolve(undefined);
                         }
-                        if (error.response.status === 404) {
+                        if (error.response.status === 500) {
                             reject(new Error('error.server'));
                         }
                         else {
