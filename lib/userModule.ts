@@ -21,9 +21,9 @@ export async function getUserByMail(token: string, pEmail: string, API_URL: stri
       delete user.passwordSalt
       resolve(user)
     }).catch(error => {
-      if (error.response.status === 404) {
+      if (error.response.status === 500) {
         resolve(undefined)
-      } if (error.response.status === 500) {
+      } if (error.response.status === 404) {
         reject(new Error('error.server'))
       } else {
         reject(new Error('error.dataNotProvided'))
