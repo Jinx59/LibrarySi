@@ -47,11 +47,11 @@ function getUserByMail(token, pEmail, API_URL, API_KEY) {
                         headers: { Authorization: token, "x-api-key": API_KEY }
                     }).then(function (res) {
                         if (res.status == 200) {
-                            // let jsonData: IUser = res.data
-                            // // delete critical information
-                            // delete jsonData.password
-                            // delete jsonData.passwordSalt
-                            resolve(res);
+                            var jsonData = res.data;
+                            // delete critical information
+                            delete jsonData.password;
+                            delete jsonData.passwordSalt;
+                            resolve(jsonData);
                         }
                         else if (res.status == 404) {
                             resolve(undefined);
