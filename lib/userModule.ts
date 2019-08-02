@@ -34,7 +34,7 @@ export async function createUser (token: string|undefined, pUser: IUser, API_URL
   // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
   
     return new Promise((resolve, reject) => {
-      axios.get(API_URL, { headers: {
+      axios.post(API_URL, { headers: {
          Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, data: pUser})
       .then(res => {
             let user: IUser = res.data

@@ -72,7 +72,7 @@ function createUser(token, pUser, API_URL, API_KEY) {
             // // set headers and method
             // const options = { method: "GET", headers: { Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json" }, body: JSON.stringify(pUser) };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    axios_1.default.get(API_URL, { headers: {
+                    axios_1.default.post(API_URL, { headers: {
                             Authorization: token, "x-api-key": API_KEY, "Content-Type": "application/json"
                         }, data: pUser })
                         .then(function (res) {
