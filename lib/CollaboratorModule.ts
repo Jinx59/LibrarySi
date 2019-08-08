@@ -24,6 +24,7 @@ export class CollaboratorModule {
       url = parseQueryParam(filters, url)
       url = parsePagination(pagination, url)
 
+      // define options
       axios({
         method: 'get',
         url: url,
@@ -49,7 +50,7 @@ export class CollaboratorModule {
   async getById(pId: string): Promise<ICollaborator | undefined> {
 
     // set url
-    const url = this.apiUri + '/api/v1/collaborators/' + pId
+    const url = this.apiUri + pId
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
@@ -73,7 +74,7 @@ export class CollaboratorModule {
     })
   }
 
-  async delete (pId: string): Promise<void> {
+  async delete(pId: string): Promise<void> {
 
     const url = this.apiUri + '/api/v1/collaborators/' + pId
     return new Promise((resolve, reject) => {
@@ -89,6 +90,57 @@ export class CollaboratorModule {
       }).catch(error => {
         if (error.response.status === 404) {
           reject(new Error('error.notFound'))
+        } if (error.response.status === 500) {
+          reject(new Error('error.server'))
+        } else {
+          reject(new Error('error.dataNotProvided'))
+        }
+      })
+    })
+  }
+
+  async update(pCollab: ICollaborator, pId: string): Promise<void> {
+    const url = this.apiUri + '/api/v1/collaborators/' + pId
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'put',
+        url: url,
+        headers: {
+          Authorization: this.apiToken,
+          'x-api-key': this.apiKey
+        },
+        data: pCollab
+      }).then(res => {
+        resolve()
+      }).catch(error => {
+        if (error.response.status === 404) {
+          reject(new Error('error.notFound'))
+        } if (error.response.status === 500) {
+          reject(new Error('error.server'))
+        } else {
+          reject(new Error('error.dataNotProvided'))
+        }
+      })
+    })
+  }
+
+  async create(pCollab: ICollaborator): Promise<ICollaborator> {
+    const url = this.apiUri + '/api/v1/collaborators/'
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'post',
+        url: url,
+        headers: {
+          Authorization: this.apiToken,
+          'x-api-key': this.apiKey
+        },
+        data: pCollab
+      }).then(res => {
+        let collab: ICollaborator = res.data
+        resolve(collab)
+      }).catch(error => {
+        if (error.response.status === 409) {
+          reject(new Error('error.conflict'))
         } if (error.response.status === 500) {
           reject(new Error('error.server'))
         } else {
